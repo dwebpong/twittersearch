@@ -19,3 +19,7 @@
 5. Make the button actually do something (search function)
 6. Empty the results with each search
 7. Get the search term!
+8. Test each of the result variables
+9. Test to see if we can create static HTML elements
+  - One to represent each tweet
+10. Fill in the dynamic data

@@ -1,3 +1,7 @@
+var cleanurl = function(url) {
+	return url.replace('_normal', '');
+};
+
 var dothesearch = function()
 {
 	// Clear out the result set
@@ -22,20 +26,24 @@ var dothesearch = function()
 			console.log(tweet.text +", "+ tweet.created_at+", "+tweet.user.screen_name+", "+tweet.user.profile_image_url);
 
 			// Dump the tweet text to the interface
-			var $user = 
-				$('<div class="col-sm-2">')
-					.html('<img src="' + tweet.user.profile_image_url + '" class="img-responsive tweet-img">')
-					.append('<p class="h4 tweet-name">@' + tweet.user.screen_name + '</p>');
+			var $tweet = $('<li class="list-group-item row tweet">'+
+				           ' <div class="col-sm-2 user">'+
+				           '   <img src="" class="img-responsive tweet-img">'+
+				           '   <p class="h4 tweet-name"></p>'+
+				           ' </div>'+
+				           ' <div class="col-sm-10 text">'+
+				           '   <p class="h1 tweet-text"></p>'+
+				           '   <p class="h3 text-right tweet-date"></p>'+
+				           ' </div>'+
+				           '</li>');
 
-			var $text = 
-				$('<div class="col-sm-10">')
-					.html('<p class="h1 tweet-text">' + tweet.text + '</p>')
-					.append('<p class="h3 text-right tweet-date">' + tweet.created_at + '</p>');
+			$tweet.find('.tweet-text').text(tweet.text);
+			$tweet.find('.tweet-date').text($.timeago(tweet.created_at));
+			$tweet.find('.tweet-name').text('@' + tweet.user.screen_name);
+			$tweet.find('.tweet-img').attr('src', cleanurl(tweet.user.profile_image_url));
 
-			var $tweet = $('<li class="list-group-item row tweet">')
-				.html($user)
-				.append($text)
-				.appendTo('#tweets');
+			$tweet.appendTo('#tweets');
+
 
 		});
 
